@@ -5,6 +5,7 @@
  */
 package labpractico5;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,10 +43,10 @@ public class comboBox extends javax.swing.JFrame {
         jBttnAgregar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTabladeCategorias = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBoxCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "electronica", "ropa", "alimentos" }));
         jComboBoxCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxCategoriasActionPerformed(evt);
@@ -86,6 +87,9 @@ public class comboBox extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTabladeCategorias);
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel4.setText("CARGA DE PRODUCTOS");
+
         jDesktopPane1.setLayer(jComboBoxCategorias, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -94,6 +98,7 @@ public class comboBox extends javax.swing.JFrame {
         jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jBttnAgregar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -101,9 +106,6 @@ public class comboBox extends javax.swing.JFrame {
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(jBttnAgregar))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,13 +120,20 @@ public class comboBox extends javax.swing.JFrame {
                                     .addComponent(jComboBoxCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(jTextPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
-                                        .addComponent(jTextNombre, javax.swing.GroupLayout.Alignment.LEADING)))))))
-                .addContainerGap(128, Short.MAX_VALUE))
+                                        .addComponent(jTextNombre, javax.swing.GroupLayout.Alignment.LEADING))))))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBttnAgregar))))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
@@ -170,13 +179,28 @@ public class comboBox extends javax.swing.JFrame {
 
     private void jBttnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBttnAgregarActionPerformed
         // TODO add your handling code here:
+         
         String nombre=this.jTextNombre.getText();
-        double precio=(double)(Integer.parseInt(this.jTextPrecio.getText()));
+        double precio=0;
         String categoria = this.jComboBoxCategorias.getSelectedItem().toString();
-        Productos producto=new Productos (nombre, categoria,precio);
-            
-        cargarProducto(producto);
         
+        
+          try{
+              precio=(double)(Integer.parseInt(this.jTextPrecio.getText()));
+        
+        }catch(NumberFormatException nf){
+            JOptionPane.showMessageDialog(this,"Error, ingrese un numero valido.");
+          
+        }
+          if((!nombre.equals(""))&&(precio >0)){
+              Productos producto=new Productos (nombre, categoria,precio);
+             cargarProducto(producto); 
+          } else{
+              JOptionPane.showMessageDialog(this,"Error, debe ingresar datos.");
+      }
+      jTextNombre.setText("");
+      jTextPrecio.setText("");
+          
         
         
         
@@ -225,6 +249,7 @@ public class comboBox extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTabladeCategorias;
     private javax.swing.JTextField jTextNombre;
